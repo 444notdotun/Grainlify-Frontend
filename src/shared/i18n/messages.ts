@@ -33,6 +33,8 @@ export const DEFAULT_LOCALE: Locale = 'en'
  *   extracted from `src/features/landing/components/Navbar.tsx`.
  * - `dashboardNav.*` — the authenticated dashboard sidebar navigation,
  *   extracted from `src/features/dashboard/DashboardLayout.tsx`.
+ * - `settings.tabs.*` — SettingsPage tab labels,
+ *   extracted from `src/features/settings/pages/SettingsPage.tsx`.
  *
  * `as const` keeps every value a string literal so {@link MessageId} can be
  * derived from the keys with full type-safety.
@@ -57,6 +59,12 @@ export const en = {
   'dashboardNav.data': 'Data',
   'dashboardNav.leaderboard': 'Leaderboard',
   'dashboardNav.blog': 'Grainlify Blog',
+  // ── Settings page tabs — src/features/settings/pages/SettingsPage.tsx ──
+  'settings.tabs.profile': 'Profile',
+  'settings.tabs.notifications': 'Notifications',
+  'settings.tabs.payout': 'Payout Preferences',
+  'settings.tabs.billing': 'Billing Profiles',
+  'settings.tabs.terms': 'Terms and Conditions',
 } as const
 
 /**
