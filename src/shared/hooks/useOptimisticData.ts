@@ -264,16 +264,5 @@ export function useOptimisticData<T>(
     return emptyPredicate(data)
   }, [data, emptyPredicate])
 
-  return {
-    data,
-    isLoading,
-    hasError,
-    error,
-    retry,
-    isEmpty,
-    fetchData,
-    clearCache,
-    retryCount,
-    isRetrying,
-  }
+  return { data, isLoading, hasError, error, retry, isEmpty, fetchData, clearCache, retryCount, isRetrying }
 }

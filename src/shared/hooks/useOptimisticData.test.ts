@@ -328,7 +328,9 @@ describe('useOptimisticData', () => {
   describe('exponential backoff', () => {
     it('retries with a delay instead of immediately', async () => {
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-      const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 1000 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { baseDelay: 1000 })
+      )
 
       const fetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -428,7 +430,9 @@ describe('useOptimisticData', () => {
       const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.5)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 1000 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { baseDelay: 1000 })
+      )
 
       const fetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -540,7 +544,9 @@ describe('useOptimisticData', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { maxRetries: 2 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { maxRetries: 2 })
+      )
 
       const fetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -586,7 +592,9 @@ describe('useOptimisticData', () => {
       vi.spyOn(Math, 'random').mockReturnValue(0)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { maxRetries: 2 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { maxRetries: 2 })
+      )
 
       const failingFetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -641,7 +649,9 @@ describe('useOptimisticData', () => {
       vi.spyOn(Math, 'random').mockReturnValue(1)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 1000 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { baseDelay: 1000 })
+      )
 
       const fetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -742,7 +752,9 @@ describe('useOptimisticData', () => {
       vi.spyOn(Math, 'random').mockReturnValue(1)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 5000 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { baseDelay: 5000 })
+      )
 
       const failingFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -781,7 +793,9 @@ describe('useOptimisticData', () => {
       vi.spyOn(Math, 'random').mockReturnValue(1)
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 2000 }))
+      const { result } = renderHook(() =>
+        useOptimisticData('initial', { baseDelay: 2000 })
+      )
 
       const fetchFn = vi.fn().mockRejectedValue(new Error('fail'))
 
@@ -822,7 +836,9 @@ describe('useOptimisticData', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0)
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    const { result } = renderHook(() => useOptimisticData('initial', { baseDelay: 100 }))
+    const { result } = renderHook(() =>
+      useOptimisticData('initial', { baseDelay: 100 })
+    )
 
     const staleFetchFn = vi.fn().mockRejectedValue(new Error('stale request failed'))
     await act(async () => {
