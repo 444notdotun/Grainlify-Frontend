@@ -1,18 +1,28 @@
-import { Github, ChevronDown } from 'lucide-react'
-import { useTheme } from '../../../shared/contexts/ThemeContext'
-import { useMemo, useCallback, memo } from 'react'
+import { Github, ChevronDown } from "lucide-react";
+import { useTheme } from "../../../shared/contexts/ThemeContext";
+import { useMemo, useCallback, memo } from "react";
 
+/**
+ * Props for the ProjectRow component.
+ */
 interface ProjectRowProps {
-  project: any
-  idx: number
-  theme: string
-  getLanguageIcon: (lang: string) => { icon: string; color: string }
+  /** The project data to display. */
+  project: any;
+  /** The index of the row, used for alternating background colors. */
+  idx: number;
+  /** The current theme ("dark" or "light"). */
+  theme: string;
+  /** Helper function to get the icon and color for a given language. */
+  getLanguageIcon: (lang: string) => { icon: string; color: string };
 }
 
+/**
+ * Renders a single row in the desktop projects table.
+ */
 const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowProps) => (
   <tr
     className={`border-b border-white/10 hover:bg-white/[0.05] transition-colors ${
-      idx % 2 === 0 ? 'bg-white/[0.02]' : ''
+      idx % 2 === 0 ? "bg-white/[0.02]" : ""
     }`}
   >
     <td className="px-6 py-4 whitespace-nowrap">
@@ -22,7 +32,7 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
         </div>
         <span
           className={`text-[14px] font-semibold transition-colors ${
-            theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+            theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
           }`}
         >
           {project.name}
@@ -33,12 +43,12 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
       <div className="flex items-center space-x-2">
         <Github
           className={`w-4 h-4 transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         />
         <span
           className={`text-[13px] transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         >
           {project.lead}
@@ -48,9 +58,9 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
     <td className="px-6 py-4 whitespace-nowrap">
       <span
         className={`inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-semibold transition-colors ${
-          theme === 'dark'
-            ? 'bg-[#c9983a]/20 text-[#f5c563]'
-            : 'bg-[#c9983a]/25 border border-[#c9983a]/30 text-[#2d2820]'
+          theme === "dark"
+            ? "bg-[#c9983a]/20 text-[#f5c563]"
+            : "bg-[#c9983a]/25 border border-[#c9983a]/30 text-[#2d2820]"
         }`}
       >
         {project.contributors}
@@ -60,14 +70,14 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
       <div className="flex items-center space-x-1">
         <span
           className={`text-[13px] transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         >
           {project.availableIssues}
         </span>
         <ChevronDown
           className={`w-4 h-4 transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         />
       </div>
@@ -75,9 +85,9 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
     <td className="px-6 py-4 whitespace-nowrap">
       <span
         className={`inline-flex items-center px-3 py-1.5 rounded-full text-[13px] font-semibold transition-colors ${
-          theme === 'dark'
-            ? 'bg-[#c9983a]/20 text-[#f5c563]'
-            : 'bg-[#c9983a]/25 border border-[#c9983a]/30 text-[#2d2820]'
+          theme === "dark"
+            ? "bg-[#c9983a]/20 text-[#f5c563]"
+            : "bg-[#c9983a]/25 border border-[#c9983a]/30 text-[#2d2820]"
         }`}
       >
         {project.myContributions}
@@ -85,7 +95,7 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
     </td>
     <td
       className={`px-6 py-4 text-[14px] font-semibold whitespace-nowrap transition-colors ${
-        theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+        theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
       }`}
     >
       {project.myRewards}
@@ -93,14 +103,14 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
     <td className="px-6 py-4 whitespace-nowrap">
       <div className="flex items-center gap-2">
         {project.languages.map((lang: string) => {
-          const iconInfo = getLanguageIcon(lang)
+          const iconInfo = getLanguageIcon(lang);
           return (
             <span
               key={`${project.id}-${lang}`}
               className={`flex items-center gap-1.5 px-2 py-1 rounded-[6px] text-[11px] font-medium transition-colors ${
-                theme === 'dark'
-                  ? 'bg-[#c9983a]/20 border border-[#c9983a]/30 text-[#f5c563]'
-                  : 'bg-[#c9983a]/15 border border-[#c9983a]/25 text-[#8b6f3a]'
+                theme === "dark"
+                  ? "bg-[#c9983a]/20 border border-[#c9983a]/30 text-[#f5c563]"
+                  : "bg-[#c9983a]/15 border border-[#c9983a]/25 text-[#8b6f3a]"
               }`}
             >
               <span
@@ -110,7 +120,7 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
               </span>
               <span>{lang}</span>
             </span>
-          )
+          );
         })}
       </div>
     </td>
@@ -118,12 +128,12 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
       <div className="flex items-center space-x-2">
         <Github
           className={`w-4 h-4 transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         />
         <span
           className={`text-[12px] transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         >
           {project.repository}
@@ -134,14 +144,14 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
       <div className="flex items-center space-x-1">
         <span
           className={`text-[12px] transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         >
           {project.billingProfile}
         </span>
         <ChevronDown
           className={`w-4 h-4 transition-colors ${
-            theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
           }`}
         />
       </div>
@@ -149,27 +159,38 @@ const ProjectRow = memo(({ project, idx, theme, getLanguageIcon }: ProjectRowPro
     <td className="px-6 py-4 whitespace-nowrap">
       <button
         className={`px-4 py-2 rounded-[8px] backdrop-blur-[20px] border text-[12px] font-medium transition-all ${
-          theme === 'dark'
-            ? 'bg-white/[0.08] border-white/15 text-[#f5f5f5] hover:bg-white/[0.12] hover:border-[#c9983a]/40'
-            : 'bg-white/[0.15] border-white/25 text-[#2d2820] hover:bg-white/[0.2] hover:border-[#c9983a]/40'
+          theme === "dark"
+            ? "bg-white/[0.08] border-white/15 text-[#f5f5f5] hover:bg-white/[0.12] hover:border-[#c9983a]/40"
+            : "bg-white/[0.15] border-white/25 text-[#2d2820] hover:bg-white/[0.2] hover:border-[#c9983a]/40"
         }`}
       >
         See project
       </button>
     </td>
   </tr>
-))
+));
 
+/**
+ * Props for the ProjectMobileCard component.
+ */
 interface ProjectMobileCardProps {
-  project: any
-  theme: string
-  getLanguageIcon: (lang: string) => { icon: string; color: string }
+  /** The project data to display. */
+  project: any;
+  /** The current theme ("dark" or "light"). */
+  theme: string;
+  /** Helper function to get the icon and color for a given language. */
+  getLanguageIcon: (lang: string) => { icon: string; color: string };
 }
 
+/**
+ * Renders a project as a card for mobile views.
+ */
 const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobileCardProps) => (
   <div
     className={`backdrop-blur-[30px] bg-white/[0.12] rounded-[16px] border border-white/20 p-4 transition-colors hover:bg-white/[0.15] ${
-      theme === 'dark' ? 'hover:border-white/30' : 'hover:border-white/25'
+      theme === "dark"
+        ? "hover:border-white/30"
+        : "hover:border-white/25"
     }`}
   >
     {/* Header: Project name with logo */}
@@ -181,14 +202,14 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
         <div className="min-w-0 flex-1">
           <h4
             className={`text-[14px] font-semibold truncate ${
-              theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+              theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
             }`}
           >
             {project.name}
           </h4>
           <p
             className={`text-[12px] truncate ${
-              theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
+              theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
             }`}
           >
             {project.billingProfile}
@@ -202,13 +223,15 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
       {/* Contributors */}
       <div className="backdrop-blur-[20px] bg-white/[0.05] rounded-[10px] p-2.5">
         <span
-          className={`text-[11px] block ${theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'}`}
+          className={`text-[11px] block ${
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
+          }`}
         >
           Contributors
         </span>
         <span
           className={`text-[13px] font-semibold mt-0.5 ${
-            theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+            theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
           }`}
         >
           {project.contributors}
@@ -218,13 +241,15 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
       {/* Available Issues */}
       <div className="backdrop-blur-[20px] bg-white/[0.05] rounded-[10px] p-2.5">
         <span
-          className={`text-[11px] block ${theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'}`}
+          className={`text-[11px] block ${
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
+          }`}
         >
           Available
         </span>
         <span
           className={`text-[13px] font-semibold mt-0.5 ${
-            theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+            theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
           }`}
         >
           {project.availableIssues}
@@ -234,13 +259,15 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
       {/* My Contributions */}
       <div className="backdrop-blur-[20px] bg-white/[0.05] rounded-[10px] p-2.5">
         <span
-          className={`text-[11px] block ${theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'}`}
+          className={`text-[11px] block ${
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
+          }`}
         >
           My contributions
         </span>
         <span
           className={`text-[13px] font-semibold mt-0.5 ${
-            theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+            theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
           }`}
         >
           {project.myContributions}
@@ -250,13 +277,15 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
       {/* My Rewards */}
       <div className="backdrop-blur-[20px] bg-white/[0.05] rounded-[10px] p-2.5">
         <span
-          className={`text-[11px] block ${theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'}`}
+          className={`text-[11px] block ${
+            theme === "dark" ? "text-[#d4d4d4]" : "text-[#7a6b5a]"
+          }`}
         >
           My rewards
         </span>
         <span
           className={`text-[13px] font-semibold mt-0.5 ${
-            theme === 'dark' ? 'text-[#f5f5f5]' : 'text-[#2d2820]'
+            theme === "dark" ? "text-[#f5f5f5]" : "text-[#2d2820]"
           }`}
         >
           {project.myRewards}
@@ -267,14 +296,14 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
     {/* Languages */}
     <div className="flex items-center gap-2 mb-3 flex-wrap">
       {project.languages.map((lang: string) => {
-        const iconInfo = getLanguageIcon(lang)
+        const iconInfo = getLanguageIcon(lang);
         return (
           <span
             key={`${project.id}-${lang}`}
             className={`flex items-center gap-1.5 px-2 py-1 rounded-[6px] text-[11px] font-medium transition-colors ${
-              theme === 'dark'
-                ? 'bg-[#c9983a]/20 border border-[#c9983a]/30 text-[#f5c563]'
-                : 'bg-[#c9983a]/15 border border-[#c9983a]/25 text-[#8b6f3a]'
+              theme === "dark"
+                ? "bg-[#c9983a]/20 border border-[#c9983a]/30 text-[#f5c563]"
+                : "bg-[#c9983a]/15 border border-[#c9983a]/25 text-[#8b6f3a]"
             }`}
           >
             <span
@@ -284,23 +313,27 @@ const ProjectMobileCard = memo(({ project, theme, getLanguageIcon }: ProjectMobi
             </span>
             <span>{lang}</span>
           </span>
-        )
+        );
       })}
     </div>
 
     {/* See Project Button */}
     <button
       className={`w-full px-4 py-2.5 rounded-[8px] backdrop-blur-[20px] border text-[13px] font-medium transition-all ${
-        theme === 'dark'
-          ? 'bg-[#c9983a]/80 border-[#c9983a] text-[#2d2820] hover:bg-[#c9983a] hover:border-[#c9983a]'
-          : 'bg-[#c9983a]/90 border-[#c9983a] text-white hover:bg-[#c9983a] hover:border-[#c9983a]'
+        theme === "dark"
+          ? "bg-[#c9983a]/80 border-[#c9983a] text-[#2d2820] hover:bg-[#c9983a] hover:border-[#c9983a]"
+          : "bg-[#c9983a]/90 border-[#c9983a] text-white hover:bg-[#c9983a] hover:border-[#c9983a]"
       }`}
     >
       See project
     </button>
   </div>
-))
+));
 
+/**
+ * ProjectsTab component displays a list of projects in either a table view (desktop)
+ * or a card view (mobile).
+ */
 export function ProjectsTab() {
   const { theme } = useTheme()
 
@@ -319,79 +352,76 @@ export function ProjectsTab() {
         icon: language.substring(0, 2),
         color: 'bg-gray-500',
       }
-    )
-  }, [])
+    );
+  }, []);
 
-  const projects = useMemo(
-    () => [
-      {
-        id: 1,
-        name: 'React Ecosystem',
-        logo: '⚛️',
-        lead: 'project-lead-1',
-        contributors: 1250,
-        availableIssues: '3 GFI',
-        myContributions: 15,
-        myRewards: '3,600 USD',
-        languages: ['TypeScript', 'JavaScript'],
-        repository: 'react-ecosystem/react-core',
-        billingProfile: 'React Foundation',
-      },
-      {
-        id: 2,
-        name: 'Next.js Framework',
-        logo: '▲',
-        lead: 'project-lead-2',
-        contributors: 890,
-        availableIssues: '2 GFI',
-        myContributions: 8,
-        myRewards: '2,640 USD',
-        languages: ['TypeScript', 'JavaScript'],
-        repository: 'vercel/next.js',
-        billingProfile: 'Vercel Inc.',
-      },
-      {
-        id: 3,
-        name: 'Vue.js',
-        logo: 'V',
-        lead: 'project-lead-3',
-        contributors: 650,
-        availableIssues: '3 GFI',
-        myContributions: 15,
-        myRewards: '1,800 USD',
-        languages: ['TypeScript', 'JavaScript'],
-        repository: 'vuejs/vue',
-        billingProfile: 'Vue.js Foundation',
-      },
-      {
-        id: 4,
-        name: 'Express.js',
-        logo: 'E',
-        lead: 'project-lead-4',
-        contributors: 350,
-        availableIssues: '2 GFI',
-        myContributions: 8,
-        myRewards: '1,260 USD',
-        languages: ['JavaScript'],
-        repository: 'expressjs/express',
-        billingProfile: 'Express.js Foundation',
-      },
-      {
-        id: 5,
-        name: 'Django',
-        logo: 'D',
-        lead: 'project-lead-5',
-        contributors: 2820,
-        availableIssues: '3 GFI',
-        myContributions: 10,
-        myRewards: '2,800 USD',
-        languages: ['Python'],
-        repository: 'django/django',
-        billingProfile: 'Django Software Foundation',
-      },
-    ],
-    []
-  )
+  const projects = useMemo(() => [
+    {
+      id: 1,
+      name: "React Ecosystem",
+      logo: "⚛️",
+      lead: "project-lead-1",
+      contributors: 1250,
+      availableIssues: "3 GFI",
+      myContributions: 15,
+      myRewards: "3,600 USD",
+      languages: ["TypeScript", "JavaScript"],
+      repository: "react-ecosystem/react-core",
+      billingProfile: "React Foundation",
+    },
+    {
+      id: 2,
+      name: "Next.js Framework",
+      logo: "▲",
+      lead: "project-lead-2",
+      contributors: 890,
+      availableIssues: "2 GFI",
+      myContributions: 8,
+      myRewards: "2,640 USD",
+      languages: ["TypeScript", "JavaScript"],
+      repository: "vercel/next.js",
+      billingProfile: "Vercel Inc.",
+    },
+    {
+      id: 3,
+      name: "Vue.js",
+      logo: "V",
+      lead: "project-lead-3",
+      contributors: 650,
+      availableIssues: "3 GFI",
+      myContributions: 15,
+      myRewards: "1,800 USD",
+      languages: ["TypeScript", "JavaScript"],
+      repository: "vuejs/vue",
+      billingProfile: "Vue.js Foundation",
+    },
+    {
+      id: 4,
+      name: "Express.js",
+      logo: "E",
+      lead: "project-lead-4",
+      contributors: 350,
+      availableIssues: "2 GFI",
+      myContributions: 8,
+      myRewards: "1,260 USD",
+      languages: ["JavaScript"],
+      repository: "expressjs/express",
+      billingProfile: "Express.js Foundation",
+    },
+    {
+      id: 5,
+      name: "Django",
+      logo: "D",
+      lead: "project-lead-5",
+      contributors: 2820,
+      availableIssues: "3 GFI",
+      myContributions: 10,
+      myRewards: "2,800 USD",
+      languages: ["Python"],
+      repository: "django/django",
+      billingProfile: "Django Software Foundation",
+    },
+  ], []);
 
   return (
     <>
@@ -399,9 +429,11 @@ export function ProjectsTab() {
       <div className="hidden md:block backdrop-blur-[30px] bg-white/[0.12] rounded-[20px] border border-white/20 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
+            <caption className="sr-only">Projects List</caption>
             <thead className="backdrop-blur-[20px] bg-white/[0.08] border-b border-white/20">
               <tr>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -409,6 +441,7 @@ export function ProjectsTab() {
                   Project name
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -416,6 +449,7 @@ export function ProjectsTab() {
                   Project lead
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -423,6 +457,7 @@ export function ProjectsTab() {
                   Contributors
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -430,6 +465,7 @@ export function ProjectsTab() {
                   Available issues
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -437,6 +473,7 @@ export function ProjectsTab() {
                   My contributions
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -444,6 +481,7 @@ export function ProjectsTab() {
                   My rewards
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -451,6 +489,7 @@ export function ProjectsTab() {
                   Languages
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -458,6 +497,7 @@ export function ProjectsTab() {
                   Repositories
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
@@ -465,6 +505,7 @@ export function ProjectsTab() {
                   Billing profile
                 </th>
                 <th
+                  scope="col"
                   className={`px-6 py-4 text-left text-[12px] font-semibold uppercase tracking-wider whitespace-nowrap transition-colors ${
                     theme === 'dark' ? 'text-[#d4d4d4]' : 'text-[#7a6b5a]'
                   }`}
