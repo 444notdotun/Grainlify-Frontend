@@ -46,13 +46,26 @@ describe('SearchPage Accessibility and Functionality', () => {
       if (q === 'react') {
         results.push(
           { id: '1', type: 'issue', title: 'Add dark mode support', subtitle: 'React Dashboard' },
-          { id: '5', type: 'issue', title: 'Refactor component structure', subtitle: 'React Dashboard' },
-          { id: '1', type: 'project', title: 'React Dashboard', subtitle: 'Modern dashboard with React and TypeScript' }
+          {
+            id: '5',
+            type: 'issue',
+            title: 'Refactor component structure',
+            subtitle: 'React Dashboard',
+          },
+          {
+            id: '1',
+            type: 'project',
+            title: 'React Dashboard',
+            subtitle: 'Modern dashboard with React and TypeScript',
+          }
         )
       } else if (q === 'sarah') {
-        results.push(
-          { id: '1', type: 'contributor', title: 'Sarah Johnson', subtitle: '245 contributions' }
-        )
+        results.push({
+          id: '1',
+          type: 'contributor',
+          title: 'Sarah Johnson',
+          subtitle: '245 contributions',
+        })
       }
       return Promise.resolve(results)
     })
@@ -117,7 +130,9 @@ describe('SearchPage Accessibility and Functionality', () => {
     // Wait for the async passive effects and state updates to resolve
     await act(async () => {})
 
-    expect(screen.getByRole('heading', { name: /Search Results/i })).toHaveTextContent('Search Results (3)')
+    expect(screen.getByRole('heading', { name: /Search Results/i })).toHaveTextContent(
+      'Search Results (3)'
+    )
     expect(screen.getByText('Add dark mode support')).toBeInTheDocument()
     expect(screen.getByText('Refactor component structure')).toBeInTheDocument()
 
@@ -185,7 +200,9 @@ describe('SearchPage Accessibility and Functionality', () => {
     mockSearchCatalog.mockResolvedValue([])
     await act(async () => {})
 
-    expect(screen.getByText('No results found for "Find the best GraphQL clients for TypeScript"')).toBeInTheDocument()
+    expect(
+      screen.getByText('No results found for "Find the best GraphQL clients for TypeScript"')
+    ).toBeInTheDocument()
   })
 
   it('should trigger correct callbacks when clicking on search results', async () => {
@@ -250,9 +267,12 @@ describe('SearchPage Accessibility and Functionality', () => {
 
   it('should render loading state while API search is in-flight', async () => {
     let resolveSearch!: (val: any) => void
-    mockSearchCatalog.mockImplementation(() => new Promise((resolve) => {
-      resolveSearch = resolve
-    }))
+    mockSearchCatalog.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveSearch = resolve
+        })
+    )
 
     await renderSearchPage()
 
@@ -292,9 +312,7 @@ describe('SearchPage Accessibility and Functionality', () => {
     expect(screen.getByText('Search server offline')).toBeInTheDocument()
 
     // Mock resolved value for retry
-    mockSearchCatalog.mockResolvedValue([
-      { id: '10', type: 'project', title: 'Vite Compiler' }
-    ])
+    mockSearchCatalog.mockResolvedValue([{ id: '10', type: 'project', title: 'Vite Compiler' }])
 
     const tryAgainBtn = screen.getByRole('button', { name: /try again/i })
     fireEvent.click(tryAgainBtn)
@@ -306,7 +324,7 @@ describe('SearchPage Accessibility and Functionality', () => {
   it('should handle request cancellation via AbortController on rapid typing', async () => {
     const signals: AbortSignal[] = []
     let resolveFirst!: (val: any) => void
-    mockSearchCatalog.mockImplementation((query: string, options?: any) => {
+    mockSearchCatalog.mockImplementation((_query: string, options?: any) => {
       if (options?.signal) {
         signals.push(options.signal)
       }
