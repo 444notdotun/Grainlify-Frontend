@@ -299,8 +299,25 @@ interface ModalSelectProps {
   options: { value: string; label: string }[]
   required?: boolean
   className?: string
+  /**
+   * Inline validation message. When set (a non-empty string), the trigger is
+   * styled as invalid, `aria-invalid="true"` and `aria-describedby` are wired to
+   * the rendered error text, and the message is shown beneath the control.
+   * Mirrors {@link ModalInput}'s `error` prop. Rendered as plain text only.
+   */
+  error?: string | null
 }
 
+/**
+ * Accessible select control for use inside {@link Modal} forms.
+ *
+ * Accessibility contract:
+ * - When `required` is set, the label shows a `*` marker.
+ * - When `error` is set, the Radix trigger receives `aria-invalid="true"` and
+ *   `aria-describedby` pointing at the inline error message, and error styling
+ *   is applied. This mirrors {@link ModalInput} so required selects get the same
+ *   accessible validation feedback as text inputs.
+ */
 export function ModalSelect({
   label,
   value,
@@ -308,9 +325,20 @@ export function ModalSelect({
   options,
   required = false,
   className = '',
+  error,
 }: ModalSelectProps) {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+  const isError = !!error
+  const errorId = useId()
+
+  const triggerStateClasses = isError
+    ? isDark
+      ? 'bg-red-500/10 border-red-500/40 text-[#f5f5f5] hover:bg-red-500/[0.15] data-[state=open]:border-red-500/60'
+      : 'bg-red-500/5 border-red-500/40 text-[#2d2820] hover:bg-red-500/[0.08] data-[state=open]:border-red-500/60'
+    : isDark
+      ? 'bg-white/[0.08] border-white/15 text-[#f5f5f5] hover:bg-white/[0.12] data-[state=open]:border-[#c9983a]/50'
+      : 'bg-white/[0.15] border-white/25 text-[#2d2820] hover:bg-white/[0.2] data-[state=open]:border-[#c9983a]/50'
 
   return (
     <div className={`flex flex-col gap-1 relative ${className}`}>
@@ -327,11 +355,9 @@ export function ModalSelect({
 
       <Select.Root value={value} onValueChange={onChange} required={required}>
         <Select.Trigger
-          className={`w-full px-4 py-3 rounded-[14px] backdrop-blur-[30px] border focus:outline-none transition-all text-[14px] flex items-center justify-between group ${
-            isDark
-              ? 'bg-white/[0.08] border-white/15 text-[#f5f5f5] hover:bg-white/[0.12] data-[state=open]:border-[#c9983a]/50'
-              : 'bg-white/[0.15] border-white/25 text-[#2d2820] hover:bg-white/[0.2] data-[state=open]:border-[#c9983a]/50'
-          }`}
+          aria-invalid={isError || undefined}
+          aria-describedby={isError ? errorId : undefined}
+          className={`w-full px-4 py-3 rounded-[14px] backdrop-blur-[30px] border focus:outline-none transition-all text-[14px] flex items-center justify-between group ${triggerStateClasses}`}
         >
           <Select.Value placeholder="Select an option" />
           <Select.Icon>
@@ -372,6 +398,17 @@ export function ModalSelect({
           </Select.Content>
         </Select.Portal>
       </Select.Root>
+
+      {isError && (
+        <p
+          id={errorId}
+          className={`text-[12px] mt-1.5 transition-colors ${
+            isDark ? 'text-red-400' : 'text-red-600'
+          }`}
+        >
+          {error}
+        </p>
+      )}
     </div>
   )
 }
